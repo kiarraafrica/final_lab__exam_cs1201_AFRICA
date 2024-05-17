@@ -94,6 +94,7 @@ class DiceGame:
                 elif choice == '2':
                     print(f"Game over. You won {self.stages_won} with a total point sof {self.user_score}")
                     self.save_scores()
+                    self.game_menu()
                     break
 
             elif self.user_point < self.cpu_point:
@@ -134,14 +135,13 @@ class DiceGame:
 
                 rankings.append((date_time_1, username, user_score, stages_won))
 
+            rankings.sort(key=lambda x: x[2], reverse=True)
+
+            print("\n\t\t\t----TOP SCORES----")
+            print("Rank\tDate&Time\t\tPlayer\t\tScores\t\tWins")
+            for rank, (date_time_1, username, user_score, stages_won) in enumerate(rankings[:10], 1):
+                print(f"{rank}\t{date_time_1}\t{username}\t\t{user_score}\t\t{stages_won}")
+        
         except FileNotFoundError:
             print("\nNo games played yet. Play a game to see top scores.")
-            self.game_menu()
-
-        rankings.sort(key=lambda x: x[2], reverse=True)
-
-        print("\n\t\t\t--TOP SCORES--")
-        print("Rank\tDate&Time\t\tPlayer\t\tScores\t\tWins")
-        for rank, (date_time_1, username, user_score, stages_won) in enumerate(rankings[:10], 1):
-            print(f"{rank}\t{date_time_1}\t{username}\t\t{user_score}\t\t{stages_won}")
             self.game_menu()
